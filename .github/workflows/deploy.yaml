@@ -77,6 +77,8 @@ jobs:
                   renv::record(sprintf(pkg_name_structure, package$RemoteUsername, package$Package))
               }
           }
+          lockfile_pkgs <- renv::lockfile_read()$Package
+          github_pkgs <- names(lockfile_pkgs)[sapply(lockfile_pkgs, function(x) x$Source == "GitHub")]
           renv::update(exclude = github_pkgs)
 
       - name: Install R packages using renv and update the renv snapshot
@@ -84,8 +86,6 @@ jobs:
         working-directory: ${{ matrix.directory }}
         run: |
           options(renv.config.cache.symlinks = FALSE)
-          lockfile_pkgs <- renv::lockfile_read()$Package
-          github_pkgs <- names(lockfile_pkgs)[sapply(lockfile_pkgs, function(x) x$Source == "GitHub")]
           renv::restore()
           renv::snapshot()
 

@@ -77,6 +77,7 @@ jobs:
                   renv::record(sprintf(pkg_name_structure, package$RemoteUsername, package$Package))
               }
           }
+          renv::update(exclude = github_pkgs)
 
       - name: Install R packages using renv and update the renv snapshot
         shell: Rscript {0}
@@ -85,8 +86,7 @@ jobs:
           options(renv.config.cache.symlinks = FALSE)
           lockfile_pkgs <- renv::lockfile_read()$Package
           github_pkgs <- names(lockfile_pkgs)[sapply(lockfile_pkgs, function(x) x$Source == "GitHub")]
-          renv::restore(clean = TRUE)
-          renv::update(exclude = github_pkgs)
+          renv::restore()
           renv::snapshot()
 
       - name: Print the new renv.lock file for ${{ matrix.directory }}

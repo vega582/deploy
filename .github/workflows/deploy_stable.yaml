@@ -34,18 +34,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        directory:
-          [
-            "RNA-seq",
-            "basic-teal",
-            "efficacy",
-            "exploratory",
-            "longitudinal",
-            "early-dev",
-            "patient-profile",
-            "python",
-            "safety",
-          ]
+        directory: ["efficacy"]
     steps:
       - name: Checkout repo 🛎
         uses: actions/checkout@v3

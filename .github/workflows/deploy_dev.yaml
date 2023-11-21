@@ -9,16 +9,16 @@ on:
   schedule:
     - cron: "55 6 * * *"
 
-concurrency:
-  group: publish-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
-
 env:
   SHINYAPPSIO_ACCOUNT: vedha-viyash
   APP_PREFIX: NEST
   APP_SUFFIX: dev
   GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
   BRANCH: dev
+
+concurrency:
+  group: publish-${{ github.event.pull_request.number || github.ref }}-${{ env.BRANCH_NAME }}
+  cancel-in-progress: true
 
 jobs:
   deploy:

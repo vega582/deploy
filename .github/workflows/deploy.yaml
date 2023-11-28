@@ -3,9 +3,6 @@ name: Deploy Stable Apps 🚀
 
 on:
   push:
-    branches:
-      - main
-      - dev
   workflow_dispatch:
   schedule:
     - cron: "12 3 * * *"
@@ -33,17 +30,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        directory: ["efficacy"]
+        directory: ["longitudinal"]
         channel: ["stable", "dev"]
     steps:
       - name: Set channel related constants
         run: |
           if [ "${{ matrix.channel }}" = "stable" ]; then
             echo "BRANCH_NAME=main" >> $GITHUB_ENV
-            echo "APP_SUFFIX=stable" >> $GITHUB_ENV
           else
             echo "BRANCH_NAME=dev" >> $GITHUB_ENV
-            echo "APP_SUFFIX=dev" >> $GITHUB_ENV
           fi
 
       - name: Checkout repo 🛎
@@ -75,7 +70,7 @@ jobs:
       - name: Restore renv from cache
         uses: actions/cache@v3
         env:
-          CACHE_KEY: renv-${{ runner.arch }}-${{ runner.os }}-${{ matrix.directory }}-${{ env.APP_SUFFIX }}
+          CACHE_KEY: renv-${{ runner.arch }}-${{ runner.os }}-${{ matrix.directory }}-${{ matrix.channel }}
         with:
           path: ${{ matrix.directory }}/renv/library
           key: ${{ env.CACHE_KEY }}-${{ hashFiles(format('{0}/renv.lock', matrix.directory)) }}
@@ -86,9 +81,10 @@ jobs:
         run: |
           setwd("${{ matrix.directory }}")
           lockfile <- renv::lockfile_read()
+          pkg_name_structure <- ifelse("${{ matrix.channel }}" == "stable", "%s/%s@*release", "%s/%s")
           for (package in lockfile$Packages) {
               if (package$Source == "GitHub") {
-                  renv::record(paste0(package$RemoteUsername, "/", package$Package, "@*release"))
+                  renv::record(sprintf(pkg_name_structure, package$RemoteUsername, package$Package))
               }
           }
 
@@ -136,8 +132,8 @@ jobs:
           )
           rsconnect::deployApp(
             appFiles = c("app.R"),
-            appName = rsconnect::generateAppName("${{ env.APP_PREFIX }}_${{ matrix.directory }}_${{ env.APP_SUFFIX }}"),
-            appTitle = "${{ env.APP_PREFIX }}_${{ matrix.directory }}_${{ env.APP_SUFFIX }}",
+            appName = rsconnect::generateAppName("${{ env.APP_PREFIX }}_${{ matrix.directory }}_${{ matrix.channel }}"),
+            appTitle = "${{ env.APP_PREFIX }}_${{ matrix.directory }}_${{ matrix.channel }}",
             account = "${{ env.SHINYAPPSIO_ACCOUNT }}",
             upload = TRUE,
             logLevel = "normal",

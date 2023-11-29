@@ -353,7 +353,7 @@
     },
     "TMB": {
       "Package": "TMB",
-      "Version": "1.9.8",
+      "Version": "1.9.9",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -365,7 +365,7 @@
         "stats",
         "utils"
       ],
-      "Hash": "5b2290e94f4fda8a873533e243b9e0c9"
+      "Hash": "e966ec410c7da11164afa063c35fbf6a"
     },
     "abind": {
       "Package": "abind",
@@ -497,9 +497,9 @@
     },
     "bslib": {
       "Package": "bslib",
-      "Version": "0.6.0",
+      "Version": "0.6.1",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "CRAN",
       "Requirements": [
         "R",
         "base64enc",
@@ -514,7 +514,7 @@
         "rlang",
         "sass"
       ],
-      "Hash": "fac047b773ad75cea6e2a25214b09ca0"
+      "Hash": "c0d8599494bc7fb408cd206bbdd9cab0"
     },
     "cachem": {
       "Package": "cachem",
@@ -2220,21 +2220,23 @@
     },
     "scales": {
       "Package": "scales",
-      "Version": "1.2.1",
+      "Version": "1.3.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
         "R6",
         "RColorBrewer",
+        "cli",
         "farver",
+        "glue",
         "labeling",
         "lifecycle",
         "munsell",
         "rlang",
         "viridisLite"
       ],
-      "Hash": "906cb23d2f1c5680b8ce439b44c6fa63"
+      "Hash": "c19df082ba346b0ffa6f833e92de34d1"
     },
     "scda": {
       "Package": "scda",

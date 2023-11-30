@@ -884,14 +884,14 @@
     },
     "expm": {
       "Package": "expm",
-      "Version": "0.999-7",
+      "Version": "0.999-8",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "Matrix",
         "methods"
       ],
-      "Hash": "af0c5d9f9ece61d4723904c7b2b49b4d"
+      "Hash": "153a99cdbe741f4c84416e35018977e8"
     },
     "fansi": {
       "Package": "fansi",
@@ -1756,6 +1756,18 @@
         "askpass"
       ],
       "Hash": "2a0dc8c6adfb6f032e4d4af82d258ab5"
+    },
+    "parallelly": {
+      "Package": "parallelly",
+      "Version": "1.36.0",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "parallel",
+        "tools",
+        "utils"
+      ],
+      "Hash": "bca377e1c87ec89ebed77bba00635b2e"
     },
     "pbkrtest": {
       "Package": "pbkrtest",
@@ -2902,14 +2914,14 @@
     },
     "tern.mmrm": {
       "Package": "tern.mmrm",
-      "Version": "0.2.1",
+      "Version": "0.2.2",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteUsername": "insightsengineering",
       "RemoteRepo": "tern.mmrm",
-      "RemoteRef": "v0.2.1",
-      "RemoteSha": "233e3f3598d78df894f41cee3605968eb8876744",
+      "RemoteRef": "v0.2.2",
+      "RemoteSha": "d3bd68044d905d7ecaccd2b662a3ec88b5be1c79",
       "Remotes": "insightsengineering/tern@*release, openpharma/mmrm",
       "Requirements": [
         "R",
@@ -2923,13 +2935,14 @@
         "lifecycle",
         "magrittr",
         "mmrm",
+        "parallelly",
         "rlang",
         "rtables",
         "stats",
         "tern",
         "tidyr"
       ],
-      "Hash": "2dbebcd69c38554ec1ae2fbe425349ae"
+      "Hash": "9e758b54d9dbe4ba3424e699331e2f6a"
     },
     "testthat": {
       "Package": "testthat",

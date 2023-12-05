@@ -158,6 +158,7 @@ jobs:
 
       - name: Deploy 🖨 ${{ matrix.directory }} 🎨
         shell: Rscript {0}
+        continue-on-error: true
         working-directory: ${{ matrix.directory }}
         run: |
           client <- connectapi::connect(
@@ -166,9 +167,9 @@ jobs:
           )
           content <- connectapi::deploy(
             client,
-            connectapi::bundle_dir(app_dir),
-            name = rsconnect::generateAppName(app_title),
-            title = app_title,
+            connectapi::bundle_dir("${{ matrix.directory }}"),
+            name = rsconnect::generateAppName("${{ env.APP_PREFIX }}-${{ matrix.directory }}-${{ matrix.channel }}"),
+            title = "${{ env.APP_PREFIX }}-${{ matrix.directory }}-${{ matrix.channel }}",
             access_type = "all"
           )
           connectapi::set_image_url(

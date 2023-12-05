@@ -152,7 +152,7 @@ jobs:
         shell: Rscript {0}
         working-directory: ${{ matrix.directory }}
         run: |
-          install.packages(c("BiocManager", "connectapi"))
+          install.packages(c("BiocManager", "rsconnect", "connectapi"))
 
       - name: Deploy 🖨 ${{ matrix.directory }} 🎨
         shell: Rscript {0}
@@ -163,6 +163,7 @@ jobs:
             server = "${{ secrets.CONNECT_SERVER }}",
             api_key = "${{ secrets.CONNECT_API_KEY }}"
           )
+          rsconnect::writeManifest("${{ matrix.directory }}")
           content <- connectapi::deploy(
             client,
             connectapi::bundle_dir("${{ matrix.directory }}"),
@@ -174,4 +175,4 @@ jobs:
             content,
             "https://raw.githubusercontent.com/insightsengineering/hex-stickers/main/thumbs/teal.png"
           )
-          connectapi::set_vanity_url(content, "${{ env.APP_PREFIX }}-${{ matrix.directory }}-${{ matrix.channel }}", force = overwrite)
+          connectapi::set_vanity_url(content, "${{ env.APP_PREFIX }}-${{ matrix.directory }}-${{ matrix.channel }}", force = TRUE)

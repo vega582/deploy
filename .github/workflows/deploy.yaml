@@ -5,8 +5,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - basic-teal/**
   workflow_dispatch:
   schedule:
     - cron: "12 3 * * *"

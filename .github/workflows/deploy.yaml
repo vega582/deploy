@@ -152,7 +152,6 @@ jobs:
         shell: Rscript {0}
         working-directory: ${{ matrix.directory }}
         run: |
-          install.packages(c("BiocManager", "connectapi"))
           renv::install("rsconnect@0.8.29")
 
       - name: Deploy 🖨 ${{ matrix.directory }} 🎨
@@ -160,11 +159,10 @@ jobs:
         continue-on-error: true
         working-directory: ${{ matrix.directory }}
         run: |
-          deploy_files <- c("app.R", "renv.lock", "renv/activate.R")
-          rsconnect::writeManifest(".", deploy_files)
+          rsconnect::writeManifest(".", c("app.R", "renv.lock", "renv/activate.R"))
           rsconnect::connectApiUser(
             account = "vedha",
-            server = "connect.appsilon.com",
+            server = "${{ secrets.CONNECT_SERVER }}",
             apiKey = "${{ secrets.CONNECT_API_KEY }}"
           )
           rsconnect::deployApp(

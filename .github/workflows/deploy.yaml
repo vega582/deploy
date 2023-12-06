@@ -156,7 +156,6 @@ jobs:
 
       - name: Deploy 🖨 ${{ matrix.directory }} 🎨
         shell: Rscript {0}
-        continue-on-error: true
         working-directory: ${{ matrix.directory }}
         run: |
           rsconnect::writeManifest(".", c("app.R", "renv.lock", "renv/activate.R"))
@@ -171,5 +170,6 @@ jobs:
             appFiles = c("app.R", "renv.lock", "renv/activate.R"),
             account = "vedha",
             appName = "remote-test",
-            appTitle = "remote-test"
+            appTitle = "remote-test",
+            forceUpdate = TRUE
           )

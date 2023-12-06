@@ -168,6 +168,7 @@ jobs:
           )
           rsconnect::deployApp(
             ".",
+            appFiles = c("app.R", "renv.lock", "renv/activate.R"),
             account = "vedha",
             appName = "remote-test",
             appTitle = "remote-test"

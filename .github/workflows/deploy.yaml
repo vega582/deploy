@@ -160,7 +160,7 @@ jobs:
         working-directory: ${{ matrix.directory }}
         run: |
           rsconnect::writeManifest(".", c("app.R", "renv.lock", "renv/activate.R"))
-          rsconnect::addServer("${{ secrets.CONNECT_SERVER }}", "deployment-server")
+          rsconnect::addServer("${{ secrets.CONNECT_SERVER }}__api__", "deployment-server")
           rsconnect::connectApiUser(
             account = "vedha",
             server = "deployment-server",

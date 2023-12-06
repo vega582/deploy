@@ -152,7 +152,8 @@ jobs:
         shell: Rscript {0}
         working-directory: ${{ matrix.directory }}
         run: |
-          install.packages(c("BiocManager", "rsconnect", "connectapi"))
+          install.packages(c("BiocManager", "connectapi"))
+          renv::install("rsconnect@0.8.29")
 
       - name: Deploy 🖨 ${{ matrix.directory }} 🎨
         shell: Rscript {0}

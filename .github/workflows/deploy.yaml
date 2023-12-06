@@ -164,10 +164,10 @@ jobs:
             server = "${{ secrets.CONNECT_SERVER }}",
             api_key = "${{ secrets.CONNECT_API_KEY }}"
           )
-          rsconnect::writeManifest("${{ matrix.directory }}")
+          rsconnect::writeManifest(".")
           content <- connectapi::deploy(
             client,
-            connectapi::bundle_dir("${{ matrix.directory }}"),
+            connectapi::bundle_dir("."),
             name = rsconnect::generateAppName("${{ env.APP_PREFIX }}-${{ matrix.directory }}-${{ matrix.channel }}"),
             title = "${{ env.APP_PREFIX }}-${{ matrix.directory }}-${{ matrix.channel }}",
             access_type = "all"

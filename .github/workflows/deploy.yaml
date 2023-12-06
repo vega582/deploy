@@ -164,7 +164,7 @@ jobs:
             server = "${{ secrets.CONNECT_SERVER }}",
             api_key = "${{ secrets.CONNECT_API_KEY }}"
           )
-          rsconnect::writeManifest(".")
+          rsconnect::writeManifest(".", c("app.R", "renv.lock", "renv/activate.R"))
           system("cat manifest.json")
           content <- connectapi::deploy(
             client,

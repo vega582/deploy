@@ -164,11 +164,13 @@ jobs:
             server = "${{ secrets.CONNECT_SERVER }}",
             api_key = "${{ secrets.CONNECT_API_KEY }}"
           )
-          rsconnect::writeManifest(".", c("app.R", "renv.lock", "renv/activate.R"))
-          system("cat manifest.json")
+          deploy_files <- c("app.R", "renv.lock", "renv/activate.R")
+          bundle_file <- "deploy_bundle.tar.gz"
+          tar(bundle_file, deploy_files)
+          rsconnect::writeManifest(".", deploy_files)
           content <- connectapi::deploy(
             client,
-            connectapi::bundle_dir("."),
+            connectapi::bundle_path(bundle_file),
             name = rsconnect::generateAppName("${{ env.APP_PREFIX }}-${{ matrix.directory }}-${{ matrix.channel }}"),
             title = "${{ env.APP_PREFIX }}-${{ matrix.directory }}-${{ matrix.channel }}",
             access_type = "all"

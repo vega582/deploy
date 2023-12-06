@@ -165,6 +165,7 @@ jobs:
             api_key = "${{ secrets.CONNECT_API_KEY }}"
           )
           rsconnect::writeManifest(".")
+          system("manifest.json")
           content <- connectapi::deploy(
             client,
             connectapi::bundle_dir("."),

@@ -37,7 +37,6 @@ jobs:
           - basic-teal
         channel:
           - stable
-          - dev
     steps:
       - name: Set channel related constants
         run: |

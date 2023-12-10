@@ -36,6 +36,7 @@ jobs:
         directory:
           - basic-teal
         channel:
+          - stable
           - dev
     steps:
       - name: Set channel related constants
@@ -158,18 +159,19 @@ jobs:
         shell: Rscript {0}
         working-directory: ${{ matrix.directory }}
         run: |
-          rsconnect::writeManifest(".", c("app.R", "renv.lock", "renv/activate.R"))
-          rsconnect::addServer("${{ secrets.CONNECT_SERVER }}__api__", "deployment-server")
-          rsconnect::connectApiUser(
-            account = "vedha",
-            server = "deployment-server",
-            apiKey = "${{ secrets.CONNECT_API_KEY }}"
+          rsconnect::setAccountInfo(
+            name = "${{ env.SHINYAPPSIO_ACCOUNT }}",
+            token = "${{ secrets.SHINYAPPSIO_TOKEN }}",
+            secret = "${{ secrets.SHINYAPPSIO_SECRET }}",
+            server = "shinyapps.io"
           )
           rsconnect::deployApp(
-            ".",
-            appFiles = c("app.R", "renv.lock", "renv/activate.R"),
-            account = "vedha",
-            appName = "remote-test",
-            appTitle = "remote-test",
+            appFiles = c("app.R"),
+            appName = rsconnect::generateAppName("${{ env.APP_PREFIX }}_${{ matrix.directory }}_${{ matrix.channel }}"),
+            appTitle = "${{ env.APP_PREFIX }}_${{ matrix.directory }}_${{ matrix.channel }}",
+            account = "${{ env.SHINYAPPSIO_ACCOUNT }}",
+            upload = TRUE,
+            logLevel = "normal",
+            lint = FALSE,
             forceUpdate = TRUE
           )
